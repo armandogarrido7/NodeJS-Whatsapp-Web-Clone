@@ -27,10 +27,10 @@ const io = require("socket.io")(server, {
 
 const port = process.env.PORT || 3001;
 
-app.use(express.static('public'));
+// app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-    res.send('../public/index.html');
+    res.send('../vue_frontend/dist/index.html');
 });
 // function hash(string) {
 //     return createHash('sha256').update(string).digest('hex');
