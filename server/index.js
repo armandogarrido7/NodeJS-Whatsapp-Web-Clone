@@ -27,7 +27,7 @@ const io = require("socket.io")(server, {
 
 const port = process.env.PORT || 3001;
 
-app.use(express.static('vue_frontend/dist'));
+app.use('vue_frontend/dist/assets', express.static('vue_frontend/dist/assets'));
 
 // app.get('/', (req, res) => {
 //     res.send('../vue_frontend/dist/index.html');
