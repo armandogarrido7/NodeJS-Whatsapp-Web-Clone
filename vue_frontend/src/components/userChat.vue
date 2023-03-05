@@ -14,7 +14,7 @@ const socketStore = useSocketStore()
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body card bg-dark d-flex flex-column align-items-center">
-                  <img :src="'/src/assets/' + socketStore.users[socketStore.selectedChat].img + '.svg'" alt="user_image" class="card-img-top round_img">
+                  <img :src="require('/src/assets/' + socketStore.users[socketStore.selectedChat].img + '.svg')" alt="user_image" class="card-img-top round_img">
                     <div class="card-body">
                       <h3 class="card-title text-light">{{ socketStore.users[socketStore.selectedChat].username }}</h3>
                       <p class="card-text text-light">{{ socketStore.users[socketStore.selectedChat].state }}</p>
@@ -26,7 +26,7 @@ const socketStore = useSocketStore()
               </div>
             </div>
           </div>
-            <img :src="'/src/assets/' + socketStore.users[socketStore.selectedChat].img + '.svg'" alt="group_image" class="profilePic">
+            <img :src="require('/src/assets/' + socketStore.users[socketStore.selectedChat].img + '.svg')" alt="group_image" class="profilePic">
             <div class="d-flex flex-column justify-content-around h-100 p-1">
               <h6 class="h6 h-50">{{ socketStore.users[socketStore.selectedChat].username }}</h6>
               <p class="h-50 typing" v-if="socketStore.users[socketStore.selectedChat].typing"> Typing...</p>

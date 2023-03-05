@@ -27,11 +27,11 @@ const io = require("socket.io")(server, {
 
 const port = process.env.PORT || 3001;
 
-app.use('vue_frontend/dist/assets', express.static('vue_frontend/dist/assets'));
+app.use(express.static('public'));
 
-// app.get('/', (req, res) => {
-//     res.send('../vue_frontend/dist/index.html');
-// });
+app.get('/', (req, res) => {
+    res.send('../public/index.html');
+});
 // function hash(string) {
 //     return createHash('sha256').update(string).digest('hex');
 // }

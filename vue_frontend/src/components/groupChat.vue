@@ -6,7 +6,7 @@ const socketStore = useSocketStore()
 <template>
     <div class="chat_part chat">
         <div class="group_info text-light d-flex align-items-center justify-content-start p-2 gap-3">
-            <img src="/src/assets/group.svg" alt="group_image" class="profilePic">
+            <img :src="require(/src/assets/group.svg)" alt="group_image" class="profilePic">
             <h6 class="h6 text-center">Group</h6>
         </div>
         <div class="card p-3 w-100" id="messages">

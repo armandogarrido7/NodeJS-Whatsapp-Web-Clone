@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Wuasap Web</h1>
+        <div class="card">
+            <div class="card-body">
+              <input type="text" autocomplete="off" placeholder="Enter your name..." id="name_input">
+              <button class="btn btn-success" id="name_btn">Submit</button>
+            </div>
+        </div>
+        <div class="card">
+            <h3>Users Connected</h3>
+            <ul id="users_list">
+            </ul>
+        </div>
+        <div class="card">
+            <div class="card" id="messages">
+
+            </div>
+            <div class="card-body">
+              <input type="text" autocomplete="off" placeholder="Enter your message..." id="msg_input">
+              <button class="btn btn-success" id="send_msg_btn">Send Message</button>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.0/socket.io.min.js"></script>
+    <script>
+    
+    var socket = io('http://localhost:3001');
+    var userList = [];
+    var name_input = document.getElementById('name_input');
+    var name_btn = document.getElementById('name_btn');
+    var send_msg_btn = document.getElementById('send_msg_btn');
+    var user_list = document.getElementById('users_list');
+    var messages_div = document.getElementById('messages');
+
+    name_btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (name_input.value) {
+            socket.emit('setUsername', name_input.value);
+        }
+    });
+
+    send_msg_btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (msg_input.value) {
+            socket.emit('sendMessage', msg_input.value);
+            msg_input.innerText = '';
+        }
+    });
+    function updateMessages(messages){
+        msg_div.innerHTML = '';
+        for (msg of messages) {
+            msg_h6 = document.createElement('h6');
+            msg_h6.innerHTML = msg;
+            msg_div.appendChild(msg_h6)
+        }
+    }
+    function addMessage(id, message){
+        msg_div = document.createElement('div');
+        if (id){
+            msg_name = document.createElement('h6');
+            msg_name.innerHTML = id;
+        }        
+        msg_text = document.createElement('h4');
+        msg_text.innerHTML = message;
+        msg_div.appendChild(msg_name);
+        msg_div.appendChild(msg_text);
+        messages_div.appendChild(msg_div);
+    }
+    function updateUsers(userList){
+        user_list.innerHTML = '';
+        for (user of userList){
+            let li = document.createElement('li');
+            li.innerText = user;
+            user_list.appendChild(li); 
+        }
+    }
+    // Tratamiento de peticiones del server
+    socket.on('updateUsers', (userList) => {
+        updateUsers(userList);
+    });
+    socket.on('userConnected', function(userList, message) {
+        addMessage('',message);
+    });
+    socket.on('userDisconnected', function(userList, message) {
+        addMessage('',message);
+    });
+    socket.on('newMessage', function(id, message) {
+        addMessage(id, message);
+    })
+
+    </script>
+</body>
+</html>
