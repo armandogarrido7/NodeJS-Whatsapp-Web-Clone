@@ -4,6 +4,8 @@ const cors = require('cors')
 app.use(cors());
 const http = require('http');
 const server = http.createServer(app);
+const path = require('path');
+
 // const { Server } = require('socket.io');
 // const cors = require('cors');
 
@@ -26,19 +28,18 @@ const io = require("socket.io")(server, {
 });
 
 const port = process.env.PORT || 3001;
+const publicPath = path.join(__dirname, '/public');
 
 app.use(express.static('public'));
 
-app.get('/', (req, res) => {
-    res.send('../public/index.html');
-});
+// app.get('/', (req, res) => {
+//     res.sendFile(__dirname + '/public/index.html');
+// });
 // function hash(string) {
 //     return createHash('sha256').update(string).digest('hex');
 // }
 function getRandomColor(){
     rnd_index = Math.floor(Math.random() * userColors.length);
-    console.log(rnd_index);
-    console.log(userColors[rnd_index]);
     return userColors[rnd_index];
 }
 let userConnected = 0;
@@ -47,21 +48,14 @@ var userColors = ['#FF0000', '#00FF00', '#0000FF', '#00BFFF', '#7B68EE', '#FFDF0
 
 io.on('connection', (socket) => {
     userConnected++;
-    console.log(socket.id);
     let user_color = getRandomColor();
     socket.emit('setUserParams', socket.id, user_color);
-    console.log('a user connected');
-    console.log('Users connected: ' + userConnected);
     if (!userList[socket.id]){
         userList[socket.id] = {
             id : socket.id,
             color: user_color
         };
         io.emit('updateUsers', userList);    
-        // console.log('Usuarios Conectados:');
-        // for (user of userList){
-        //     console.log(user);
-        // }
     }
     socket.on('userLogin', (username, img, state) => {
         userList[socket.id].username = username;
@@ -85,12 +79,9 @@ io.on('connection', (socket) => {
         socket.to(user_id).emit('isUserTyping', socket.id, state);
     });
     socket.on('messageToUser', (message, user_id) => {
-        console.log( socket.id + ' envia a ' + user_id + " mensaje:" + message);
         socket.to(user_id).emit("messageToUser", socket.id, message);
-        console.log(message);
     });
     socket.on('disconnect', () => {
-        console.log('a user disconnected');
         socket.broadcast.emit('userDisconnected', socket.id, userList[socket.id].username + " se ha desconectado");
         userConnected--;
         delete userList[socket.id];

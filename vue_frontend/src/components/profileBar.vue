@@ -5,7 +5,7 @@ const socketStore = useSocketStore();
 </script>
 <template>
     <div class="d-flex profile_bar justify-content-between align-items-center p-2">
-        <img :src="require('src/assets/' + socketStore.userImage + '.svg')" alt="user_image" class="profilePic">
+        <img :src="'/assets/' + socketStore.userImage + '.svg'" alt="user_image" class="profilePic">
         <i class="fa-solid fa-gear fa-xl" role="button" data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-lg">
@@ -32,23 +32,23 @@ const socketStore = useSocketStore();
                         <span class="text-center">Photo</span>
                         <div class="form-group d-flex gap-3 mb-3 flex-wrap">
                             <label class="form-check-label d-flex flex-column ms-2 align-items-center">
-                                <img :src="require('../assets/html.svg')" class="icon">
+                                <img src='../assets/html.svg' class="icon">
                                 <input class="form-check-input" type="radio" name="imgRadio" value="html" v-model="socketStore.userImage" checked>
                             </label>
                             <label class="form-check-label d-flex flex-column align-items-center">
-                                <img :src="require('../assets/css.svg')" class="icon">
+                                <img src="../assets/css.svg" class="icon">
                                 <input class="form-check-input" type="radio" name="imgRadio" value="css" v-model="socketStore.userImage">
                             </label>
                             <label class="form-check-label d-flex flex-column align-items-center">
-                                <img :src="require('../assets/js.svg')" class="icon">
+                                <img src="../assets/js.svg" class="icon">
                                 <input class="form-check-input" type="radio" name="imgRadio" value="js" v-model="socketStore.userImage">
                             </label>
                             <label class="form-check-label d-flex flex-column align-items-center">
-                                <img :src="require('../assets/php.svg')" class="icon">
+                                <img src="../assets/php.svg" class="icon">
                                 <input class="form-check-input" type="radio" name="imgRadio" value="php" v-model="socketStore.userImage">
                             </label>
                             <label class="form-check-label d-flex flex-column align-items-center">
-                                <img :src="require('../assets/python.svg')" class="icon">
+                                <img :src="'../assets/python.svg'" class="icon">
                                 <input class="form-check-input" type="radio" name="imgRadio" value="python" v-model="socketStore.userImage">
                             </label>
                         </div>

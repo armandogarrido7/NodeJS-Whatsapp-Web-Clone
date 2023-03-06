@@ -6,7 +6,7 @@ const socketStore = useSocketStore();
 </script>
 <template>
     <RouterLink to="/chat/group" class="d-flex flex-row align-items-center btn btn-dark chat border-bottom-dark w-100" role="button" @click="socketStore.selectChat('group')">
-        <img :src="require(/assets/whatsapp.png)" alt="group_image" class="profilePic w-25">
+        <img src='../assets/whatsapp.png' alt="group_image" class="profilePic w-25">
         <div class="d-flex flex-column w-75 ps-2">
             <div class="d-flex justify-content-between w-100">
                 <p class="h6">Group</p>
@@ -34,7 +34,7 @@ const socketStore = useSocketStore();
     <div id="user_list h-100 w-100">
         <template :key="user" v-for="user in socketStore.users">
             <RouterLink :to="'/chat/' + user.username" class="d-flex flex-row align-items-center btn btn-dark chat border-bottom-dark w-100" role="button" v-if="user.id != socketStore.userId" @click="socketStore.selectChat(user.id)">
-                <img :src="require('src/assets/' + user.img + '.svg')" :alt="user.id + '_image'" class="profilePic w-25">
+                <img :src="'../assets/' + user.img + '.svg'" :alt="user.id + '_image'" class="profilePic w-25">
                 <div class="d-flex flex-column w-75 ps-2">
                     <div class="d-flex justify-content-between w-100">
                         <p class="h6">{{ user.username }}</p>
